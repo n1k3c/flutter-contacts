@@ -16,10 +16,6 @@ class App extends StatelessWidget {
     if (settings.name == '/') {
       return MaterialPageRoute(
         builder: (context) {
-          final contactsBloc = ContactsProvider.of(context);
-
-          contactsBloc.fetchContacts();
-
           return ContactList();
         },
       );

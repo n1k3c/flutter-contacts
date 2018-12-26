@@ -1,11 +1,15 @@
 import 'dart:async';
+
 import 'package:flutter_contacts/src/data/remote/model/contact.dart';
 import 'package:flutter_contacts/src/di/injection.dart';
 import 'package:flutter_contacts/src/domain/contacts/get_contacts.dart';
+import 'package:flutter_contacts/src/presentation/feature/contacts/contact_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ContactsBloc {
   GetContacts _getContacts;
+
+  ContactPopulated contactPopulated = ContactPopulated([]);
 
 //  // Sinks
 //  Sink get fetchContacts => _fetchContactsController.sink;
@@ -13,20 +17,31 @@ class ContactsBloc {
 //  final _fetchContactsController = StreamController();
 
   // Streams
-  Stream<List<Contact>> get contactsList => _contactsSubject.stream;
+  Stream<ContactState> get contactsList => _contactsSubject.stream;
 
-  final _contactsSubject = BehaviorSubject<List<Contact>>();
+  final _contactsSubject = PublishSubject<ContactState>();
 
   ContactsBloc() {
     _getContacts = Injector().getContacts;
 
-    // _fetchContactsController.stream.listen(_fetchContacts)
+    _contactsSubject.addStream(fetchContacts());
   }
 
-  void fetchContacts() async {
-    final List<Contact>contacts = await _getContacts.fetchContacts();
-    _contactsSubject.add(contacts);
+  Stream<ContactState> fetchContacts() async* {
+    if (_hasNoExistingData()) {
+      yield ContactLoading();
+    }
+
+    try {
+      final List<Contact> contacts = await _getContacts.fetchContacts().timeout(Duration(seconds: 10));
+      yield contactPopulated.update(newContacts: contacts);
+    } catch (error) {
+      print('error occured - ' + error);
+      yield ContactError(error);
+    }
   }
+
+  bool _hasNoExistingData() => contactPopulated.contacts?.isEmpty ?? true;
 
   dispose() {
     // _fetchContactsController.close();

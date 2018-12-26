@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/src/data/remote/model/contact.dart';
 import 'package:flutter_contacts/src/domain/bloc/contacts_provider.dart';
+import 'package:flutter_contacts/src/presentation/feature/contacts/contact_state.dart';
 
 class ContactList extends StatelessWidget {
   Widget build(context) {
@@ -16,19 +17,20 @@ class ContactList extends StatelessWidget {
 
   Widget buildList(ContactsBloc bloc) {
     return StreamBuilder(
-      stream: bloc.contactsList,
-      builder: (context, AsyncSnapshot<List<Contact>> snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+        stream: bloc.contactsList,
+        builder: (context, snapshot) {
+          final data = snapshot.data;
 
-        return ListView(
-            padding: new EdgeInsets.symmetric(vertical: 8.0),
-            children: _buildContactList(snapshot.data));
-      },
-    );
+          if (data is ContactLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (data is ContactPopulated) {
+            return ListView(
+                padding: new EdgeInsets.symmetric(vertical: 8.0),
+                children: _buildContactList(data.contacts));
+          }
+        });
   }
 
   List<_ContactListItem> _buildContactList(List<Contact> _contacts) {
