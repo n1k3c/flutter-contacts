@@ -1,5 +1,4 @@
 class Contact {
-
   final String fullName;
 
   final String gender;
@@ -14,18 +13,17 @@ class Contact {
 
   final List<Phone> phones;
 
-  const Contact({
-      this.fullName,
+  const Contact(
+      {this.fullName,
       this.gender,
       this.email,
       this.imageUrl,
       this.birthday,
       this.location,
-      this.phones
-  });
+      this.phones});
 
-  Contact.fromMap(Map<String, dynamic> map) :
-        fullName = "${map['name']['first']} ${map['name']['last']}",
+  Contact.fromMap(Map<String, dynamic> map)
+      : fullName = "${map['name']['first']} ${map['name']['last']}",
         gender = map['gender'],
         email = map['email'],
         imageUrl = map['picture']['large'],
@@ -44,8 +42,8 @@ class Location {
 
   const Location({this.street, this.city});
 
-  Location.fromMap(Map<String, dynamic> map) :
-        street = map['street'],
+  Location.fromMap(Map<String, dynamic> map)
+      : street = map['street'],
         city = map['city'];
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/src/domain/bloc/contacts_bloc.dart';
+
 export 'contacts_bloc.dart';
 
 class ContactsProvider extends InheritedWidget {

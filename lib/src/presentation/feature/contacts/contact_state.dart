@@ -4,23 +4,22 @@ class ContactState {
   ContactState();
 }
 
-class ContactLoading extends ContactState {}
+class ContactStateLoading extends ContactState {}
 
-class ContactError extends ContactState {
+class ContactStateError extends ContactState {
   final String error;
-  ContactError(this.error);
+
+  ContactStateError(this.error);
 }
 
-class ContactNoResults extends ContactState {}
-
-class ContactPopulated extends ContactState {
+class ContactStatePopulated extends ContactState {
   final List<Contact> contacts;
 
   update({List<Contact> newContacts}) {
     return this..contacts.addAll(newContacts ?? this.contacts);
   }
 
-  ContactPopulated(this.contacts);
+  ContactStatePopulated(this.contacts);
 }
 
-class ContactEmpty extends ContactState {}
+class ContactStateEmpty extends ContactState {}

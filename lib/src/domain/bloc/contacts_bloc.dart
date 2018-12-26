@@ -9,14 +9,8 @@ import 'package:rxdart/rxdart.dart';
 class ContactsBloc {
   GetContacts _getContacts;
 
-  ContactPopulated contactPopulated = ContactPopulated([]);
+  ContactStatePopulated contactPopulated = ContactStatePopulated([]);
 
-//  // Sinks
-//  Sink get fetchContacts => _fetchContactsController.sink;
-//
-//  final _fetchContactsController = StreamController();
-
-  // Streams
   Stream<ContactState> get contactsList => _contactsSubject.stream;
 
   final _contactsSubject = PublishSubject<ContactState>();
@@ -29,22 +23,25 @@ class ContactsBloc {
 
   Stream<ContactState> fetchContacts() async* {
     if (_hasNoExistingData()) {
-      yield ContactLoading();
+      yield ContactStateLoading();
     }
 
     try {
-      final List<Contact> contacts = await _getContacts.fetchContacts().timeout(Duration(seconds: 10));
-      yield contactPopulated.update(newContacts: contacts);
+      final List<Contact> contacts =
+          await _getContacts.fetchContacts().timeout(Duration(seconds: 10));
+      if (contacts.isNotEmpty) {
+        yield contactPopulated.update(newContacts: contacts);
+      } else {
+        yield ContactStateEmpty();
+      }
     } catch (error) {
-      print('error occured - ' + error);
-      yield ContactError(error);
+      yield ContactStateError(error);
     }
   }
 
   bool _hasNoExistingData() => contactPopulated.contacts?.isEmpty ?? true;
 
   dispose() {
-    // _fetchContactsController.close();
     _contactsSubject.close();
   }
 }

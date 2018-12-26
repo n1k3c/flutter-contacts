@@ -13,8 +13,8 @@ class ContactsApi {
   final JsonDecoder _decoder = new JsonDecoder();
 
   Future<List<Contact>> fetchContacts() async {
-    final response = await http
-        .get(_baseUrl + '?' + _results + '=' + _perPage.toString());
+    final response =
+        await http.get(_baseUrl + '?' + _results + '=' + _perPage.toString());
 
     final jsonBody = response.body;
     final contactsContainer = _decoder.convert(jsonBody);
