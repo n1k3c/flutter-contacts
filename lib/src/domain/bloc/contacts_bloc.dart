@@ -4,7 +4,7 @@ import 'package:flutter_contacts/src/data/remote/model/contact.dart';
 import 'package:flutter_contacts/src/di/injection.dart';
 import 'package:flutter_contacts/src/domain/bloc/bloc_base.dart';
 import 'package:flutter_contacts/src/domain/contacts/get_contacts.dart';
-import 'package:flutter_contacts/src/presentation/feature/contacts/contact_state.dart';
+import 'package:flutter_contacts/src/presentation/contacts/contact_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ContactsBloc extends BlocBase {
