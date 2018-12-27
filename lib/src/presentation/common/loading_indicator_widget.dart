@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/src/util/constants.dart';
 
 class LoadingIndicatorWidget extends StatelessWidget {
   final bool visible;
@@ -9,8 +10,8 @@ class LoadingIndicatorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: AnimatedOpacity(
-        opacity: visible ? 1.0 : 0.0,
-        duration: Duration(milliseconds: 500),
+        opacity: visible ? opacityVisible : opacityInvisible,
+        duration: Duration(milliseconds: defaultAnimationDuration),
         child: CircularProgressIndicator(),
       ),
     );

@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:flutter_contacts/src/data/remote/model/contact.dart';
 import 'package:flutter_contacts/src/di/injection.dart';
+import 'package:flutter_contacts/src/domain/bloc/bloc_base.dart';
 import 'package:flutter_contacts/src/domain/contacts/get_contacts.dart';
 import 'package:flutter_contacts/src/presentation/feature/contacts/contact_state.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ContactsBloc {
+class ContactsBloc extends BlocBase {
   GetContacts _getContacts;
 
   ContactStatePopulated contactPopulated = ContactStatePopulated([]);
@@ -28,7 +29,7 @@ class ContactsBloc {
 
     try {
       final List<Contact> contacts =
-          await _getContacts.fetchContacts().timeout(Duration(seconds: 10));
+          await _getContacts.fetchContacts();
       if (contacts.isNotEmpty) {
         yield contactPopulated.update(newContacts: contacts);
       } else {
@@ -41,6 +42,7 @@ class ContactsBloc {
 
   bool _hasNoExistingData() => contactPopulated.contacts?.isEmpty ?? true;
 
+  @override
   dispose() {
     _contactsSubject.close();
   }

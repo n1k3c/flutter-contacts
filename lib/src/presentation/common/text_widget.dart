@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/src/util/constants.dart';
 
 class TextWidget extends StatelessWidget {
   final bool visible;
@@ -11,8 +12,8 @@ class TextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: AnimatedOpacity(
-        opacity: visible ? 1.0 : 0.0,
-        duration: Duration(milliseconds: 500),
+        opacity: visible ? opacityVisible : opacityInvisible,
+        duration: Duration(milliseconds: defaultAnimationDuration),
         child: Text(message),
       ),
     );

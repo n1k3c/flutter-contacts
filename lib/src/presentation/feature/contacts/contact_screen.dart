@@ -1,41 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/src/domain/bloc/contacts_provider.dart';
+import 'package:flutter_contacts/src/domain/bloc/bloc_provider.dart';
+import 'package:flutter_contacts/src/domain/bloc/contacts_bloc.dart';
 import 'package:flutter_contacts/src/presentation/common/loading_indicator_widget.dart';
 import 'package:flutter_contacts/src/presentation/common/text_widget.dart';
 import 'package:flutter_contacts/src/presentation/feature/contacts/contact_list.dart';
 import 'package:flutter_contacts/src/presentation/feature/contacts/contact_state.dart';
+import 'package:flutter_contacts/src/util/constants.dart';
 
-class ContactScreen extends StatefulWidget {
+class ContactScreen extends StatelessWidget {
   @override
-  ContactScreenState createState() {
-    return new ContactScreenState();
-  }
-}
-
-class ContactScreenState extends State<ContactScreen> {
-  ContactsBloc bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    LoadingIndicatorWidget(visible: true);
-  }
-
   Widget build(context) {
-    bloc = ContactsProvider.of(context);
+    ContactsBloc bloc = BlocProvider.of<ContactsBloc>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Contacts'),
+        title: Text(appTitle),
       ),
       body: _ContactsList(bloc),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    bloc.dispose();
   }
 }
 
@@ -65,11 +47,11 @@ class _ContactsList extends StatelessWidget {
                     ),
                     TextWidget(
                       visible: data is ContactStateError,
-                      message: 'Something went wrong. Try again!',
+                      message: errorMessage,
                     ),
                     TextWidget(
                       visible: data is ContactStateEmpty,
-                      message: 'Contact list is empty.',
+                      message: emptyList,
                     ),
                   ],
                 ),

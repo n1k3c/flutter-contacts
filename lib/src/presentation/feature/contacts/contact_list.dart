@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/src/data/remote/model/contact.dart';
+import 'package:flutter_contacts/src/util/constants.dart';
 
 class ContactListWidget extends StatelessWidget {
   final bool visible;
@@ -11,8 +12,8 @@ class ContactListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
-      opacity: visible ? 1.0 : 0.0,
-      duration: Duration(milliseconds: 500),
+      opacity: visible ? opacityVisible : opacityInvisible,
+      duration: Duration(milliseconds: defaultAnimationDuration),
       child: ListView.builder(
         itemCount: contactList.length,
         itemBuilder: (context, position) {

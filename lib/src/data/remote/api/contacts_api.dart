@@ -14,7 +14,7 @@ class ContactsApi {
 
   Future<List<Contact>> fetchContacts() async {
     final response =
-        await http.get(_baseUrl + '?' + _results + '=' + _perPage.toString());
+        await http.get('$_baseUrl?$_results=${_perPage.toString()}');
 
     final jsonBody = response.body;
     final contactsContainer = _decoder.convert(jsonBody);
