@@ -9,7 +9,10 @@ class GetContacts {
     _contactsApi = Injector().contactsApi;
   }
 
-  Future<List<Contact>> fetchContacts() {
-    return _contactsApi.fetchContacts();
+  Future<List<Contact>> fetchContacts() async {
+    return _contactsApi.fetchContacts()
+        .then((list) {
+          return list.contacts;
+    });
   }
 }

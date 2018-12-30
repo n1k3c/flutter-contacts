@@ -14,7 +14,7 @@ class ContactsBloc extends BlocBase {
 
   Stream<ContactState> get contactsList => _contactsSubject.stream;
 
-  final _contactsSubject = PublishSubject<ContactState>();
+  final _contactsSubject = BehaviorSubject<ContactState>();
 
   ContactsBloc() {
     _getContacts = Injector().getContacts;
@@ -28,14 +28,14 @@ class ContactsBloc extends BlocBase {
     }
 
     try {
-      final List<Contact> contacts =
-          await _getContacts.fetchContacts();
-      if (contacts.isNotEmpty) {
-        yield contactPopulated.update(newContacts: contacts);
-      } else {
+      final List<Contact> contacts =  await _getContacts.fetchContacts();
+      if (contacts.isEmpty) {
         yield ContactStateEmpty();
+      } else {
+        yield contactPopulated.update(newContacts: contacts);
       }
-    } catch (error) {
+    }
+    catch (error) {
       yield ContactStateError(error);
     }
   }

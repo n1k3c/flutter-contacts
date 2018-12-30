@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:flutter_contacts/src/data/remote/model/contact.dart';
+import 'package:flutter_contacts/src/data/remote/model/contacts_response.dart';
 import 'package:http/http.dart' as http;
 
 const String _baseUrl = 'http://api.randomuser.me/';
@@ -12,16 +13,38 @@ const int _perPage = 25;
 class ContactsApi {
   final JsonDecoder _decoder = new JsonDecoder();
 
-  Future<List<Contact>> fetchContacts() async {
-    final response =
-        await http.get('$_baseUrl?$_results=${_perPage.toString()}');
+  Future<ContactsResponse> fetchContacts() async {
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
 
-    final jsonBody = response.body;
-    final contactsContainer = _decoder.convert(jsonBody);
-    final List contactItems = contactsContainer['results'];
+    final isConnected = await _checkConnectivity();
 
-    return contactItems
-        .map((contactRaw) => new Contact.fromMap(contactRaw))
-        .toList();
+    if (isConnected) {
+      final response = await http.get(
+          '$_baseUrl?$_results=${_perPage.toString()}',
+          headers: requestHeaders);
+
+      if (response.statusCode == 200) {
+        return ContactsResponse.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to fetch data from API.');
+      }
+    } else throw Exception('Check your internet connection.');
   }
+}
+
+
+Future<bool> _checkConnectivity() async {
+  bool connect;
+  try {
+    final result = await InternetAddress.lookup('google.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      connect = true;
+    }
+  } on SocketException catch (_) {
+    connect = false;
+  }
+  return connect;
 }
