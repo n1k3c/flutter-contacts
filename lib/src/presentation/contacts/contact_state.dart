@@ -15,10 +15,6 @@ class ContactStateError extends ContactState {
 class ContactStatePopulated extends ContactState {
   final List<Contact> contacts;
 
-  update({List<Contact> newContacts}) {
-    return this..contacts.addAll(newContacts ?? this.contacts);
-  }
-
   ContactStatePopulated(this.contacts);
 }
 

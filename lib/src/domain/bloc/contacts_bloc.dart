@@ -21,23 +21,19 @@ class ContactsBloc extends BlocBase {
   }
 
   Stream<ContactState> fetchContacts() async* {
-    if (_hasNoExistingData()) {
-      yield ContactStateLoading();
-    }
+    yield ContactStateLoading();
 
     try {
       final List<Contact> contacts = await getContacts.fetchContacts();
       if (contacts.isEmpty) {
         yield ContactStateEmpty();
       } else {
-        yield contactPopulated.update(newContacts: contacts);
+        yield ContactStatePopulated(contacts);
       }
     } catch (error) {
       yield ContactStateError(error.toString());
     }
   }
-
-  bool _hasNoExistingData() => contactPopulated.contacts?.isEmpty ?? true;
 
   @override
   dispose() {

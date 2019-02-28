@@ -36,7 +36,7 @@ void main() {
   });
 
   test('emits a loading state and then a error state', () {
-    when(contactsBloc.getContacts.fetchContacts()).thenThrow(Exception('Check your internet connection.'));
+    when(contactsBloc.getContacts.fetchContacts()).thenThrow(Exception('Your error message is here.'));
     expect(contactsBloc.contactsList, emitsInOrder([ContactsStateLoading, ContactsStateError]));
   });
 }
