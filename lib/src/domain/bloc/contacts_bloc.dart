@@ -10,8 +10,6 @@ import 'package:rxdart/rxdart.dart';
 class ContactsBloc extends BlocBase {
   GetContacts getContacts;
 
-  ContactStatePopulated contactPopulated = ContactStatePopulated([]);
-
   Stream<ContactState> get contactsList => _contactsSubject.stream;
 
   final _contactsSubject = BehaviorSubject<ContactState>();
