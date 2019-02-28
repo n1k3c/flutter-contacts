@@ -47,7 +47,8 @@ class _ContactsList extends StatelessWidget {
                     ),
                     TextWidget(
                       visible: data is ContactStateError || snapshot.hasError,
-                      message: data is ContactStateError ? data.error : errorMessage,
+                      message:
+                          data is ContactStateError ? data.error : errorMessage,
                     ),
                     TextWidget(
                       visible: data is ContactStateEmpty,

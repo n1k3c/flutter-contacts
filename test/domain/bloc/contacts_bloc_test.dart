@@ -22,21 +22,21 @@ void main() {
   setUp(() {
     getContacts = MockGetContacts();
 
-    contactsBloc = ContactsBloc();
+    contactsBloc = ContactsBloc(getContacts);
   });
 
   test('emits a loading state and then a populated state', () {
-    when(getContacts.fetchContacts()).thenAnswer((_) async => dummyContactList());
+    when(contactsBloc.getContacts.fetchContacts()).thenAnswer((_) async => dummyContactList());
     expect(contactsBloc.contactsList, emitsInOrder([ContactsStateLoading, ContactsStatePopulated]));
   });
 
   test('emits a loading state and then a empty state', () {
-    when(getContacts.fetchContacts()).thenAnswer((_) async => dummyContactEmptyList());
+    when(contactsBloc.getContacts.fetchContacts()).thenAnswer((_) async => dummyContactEmptyList());
     expect(contactsBloc.contactsList, emitsInOrder([ContactsStateLoading, ContactsStateEmpty]));
   });
 
   test('emits a loading state and then a error state', () {
-    when(getContacts.fetchContacts()).thenThrow(Exception('Error occurred.'));
+    when(contactsBloc.getContacts.fetchContacts()).thenThrow(Exception('Check your internet connection.'));
     expect(contactsBloc.contactsList, emitsInOrder([ContactsStateLoading, ContactsStateError]));
   });
 }

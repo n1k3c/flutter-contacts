@@ -31,10 +31,10 @@ class ContactsApi {
       } else {
         throw Exception('Failed to fetch data from API.');
       }
-    } else throw Exception('Check your internet connection.');
+    } else
+      throw Exception('Check your internet connection.');
   }
 }
-
 
 Future<bool> _checkConnectivity() async {
   bool connect;

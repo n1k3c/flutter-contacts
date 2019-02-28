@@ -10,15 +10,14 @@ class Contact {
   final Location location;
   final List<Phone> phones;
 
-  const Contact({
-      this.fullName,
+  const Contact(
+      {this.fullName,
       this.gender,
       this.email,
       this.imageUrl,
       this.birthday,
       this.location,
-      this.phones
-  });
+      this.phones});
 
   Contact.fromJson(Map<String, dynamic> json)
       : fullName = "${json['name']['first']} ${json['name']['last']}",

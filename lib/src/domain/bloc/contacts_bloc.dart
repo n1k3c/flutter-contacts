@@ -8,7 +8,7 @@ import 'package:flutter_contacts/src/presentation/contacts/contact_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ContactsBloc extends BlocBase {
-  GetContacts _getContacts;
+  GetContacts getContacts;
 
   ContactStatePopulated contactPopulated = ContactStatePopulated([]);
 
@@ -16,9 +16,7 @@ class ContactsBloc extends BlocBase {
 
   final _contactsSubject = BehaviorSubject<ContactState>();
 
-  ContactsBloc() {
-    _getContacts = Injector().getContacts;
-
+  ContactsBloc(this.getContacts) {
     _contactsSubject.addStream(fetchContacts());
   }
 
@@ -28,15 +26,14 @@ class ContactsBloc extends BlocBase {
     }
 
     try {
-      final List<Contact> contacts =  await _getContacts.fetchContacts();
+      final List<Contact> contacts = await getContacts.fetchContacts();
       if (contacts.isEmpty) {
         yield ContactStateEmpty();
       } else {
         yield contactPopulated.update(newContacts: contacts);
       }
-    }
-    catch (error) {
-      yield ContactStateError(error);
+    } catch (error) {
+      yield ContactStateError(error.toString());
     }
   }
 

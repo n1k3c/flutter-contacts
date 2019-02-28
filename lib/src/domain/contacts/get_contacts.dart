@@ -10,9 +10,8 @@ class GetContacts {
   }
 
   Future<List<Contact>> fetchContacts() async {
-    return _contactsApi.fetchContacts()
-        .then((list) {
-          return list.contacts;
+    return _contactsApi.fetchContacts().then((list) {
+      return list.contacts;
     });
   }
 }
