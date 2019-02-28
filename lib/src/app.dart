@@ -10,7 +10,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: appTitle,
       home: BlocProvider<ContactsBloc>(
-        bloc: ContactsBloc(GetContacts()),
+        bloc: ContactsBloc(),
         child: ContactScreen(),
       ),
     );

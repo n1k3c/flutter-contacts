@@ -16,7 +16,11 @@ class ContactsBloc extends BlocBase {
 
   final _contactsSubject = BehaviorSubject<ContactState>();
 
-  ContactsBloc(this.getContacts) {
+  ContactsBloc({this.getContacts}) {
+    if (getContacts == null) {
+      getContacts = Injector().getContacts;
+    }
+
     _contactsSubject.addStream(fetchContacts());
   }
 

@@ -22,7 +22,7 @@ void main() {
   setUp(() {
     getContacts = MockGetContacts();
 
-    contactsBloc = ContactsBloc(getContacts);
+    contactsBloc = ContactsBloc(getContacts: getContacts);
   });
 
   test('emits a loading state and then a populated state', () {
