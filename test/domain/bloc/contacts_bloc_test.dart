@@ -1,4 +1,4 @@
-import 'package:flutter_contacts/src/domain/bloc/contact_bloc.dart';
+import 'package:flutter_contacts/src/domain/contacts/contact_bloc.dart';
 import 'package:flutter_contacts/src/domain/contacts/get_contacts.dart';
 import 'package:flutter_contacts/src/presentation/contacts/contact_event.dart';
 import 'package:flutter_contacts/src/presentation/contacts/contact_state.dart';

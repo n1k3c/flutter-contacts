@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_contacts/src/domain/bloc/contact_bloc.dart';
+import 'package:flutter_contacts/src/domain/contacts/contact_bloc.dart';
 import 'package:flutter_contacts/src/presentation/common/loading_indicator_widget.dart';
 import 'package:flutter_contacts/src/presentation/common/text_widget.dart';
 import 'package:flutter_contacts/src/presentation/contacts/contact_event.dart';

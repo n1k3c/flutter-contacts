@@ -1,7 +1,6 @@
-import 'package:flutter_contacts/src/data/remote/model/contact.dart';
-import 'package:flutter_contacts/src/data/remote/model/contacts_response.dart';
-import 'package:flutter_contacts/src/data/remote/model/location.dart';
-import 'package:flutter_contacts/src/data/remote/model/phone.dart';
+import 'package:flutter_contacts/src/data/remote/contacts/model/contact.dart';
+import 'package:flutter_contacts/src/data/remote/contacts/model/location.dart';
+import 'package:flutter_contacts/src/data/remote/contacts/model/phone.dart';
 
 Contact contact1 = Contact(
   fullName: 'Full name 1',

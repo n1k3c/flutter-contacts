@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/src/data/remote/model/contact.dart';
+import 'package:flutter_contacts/src/data/remote/contacts/model/contact.dart';
 import 'package:flutter_contacts/src/presentation/details/details_screen.dart';
 import 'package:flutter_contacts/src/util/constants.dart';
 

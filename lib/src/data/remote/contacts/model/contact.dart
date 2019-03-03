@@ -1,5 +1,5 @@
-import 'package:flutter_contacts/src/data/remote/model/location.dart';
-import 'package:flutter_contacts/src/data/remote/model/phone.dart';
+import 'package:flutter_contacts/src/data/remote/contacts/model/location.dart';
+import 'package:flutter_contacts/src/data/remote/contacts/model/phone.dart';
 
 class Contact {
   final String fullName;

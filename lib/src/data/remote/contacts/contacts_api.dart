@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_contacts/src/data/remote/model/contacts_response.dart';
+import 'package:flutter_contacts/src/data/remote/contacts/model/contacts_response.dart';
 import 'package:http/http.dart' as http;
 
 const String _baseUrl = 'http://api.randomuser.me/';

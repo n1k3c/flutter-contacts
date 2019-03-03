@@ -1,5 +1,5 @@
-import 'package:flutter_contacts/src/data/remote/model/contact.dart';
-import 'package:flutter_contacts/src/data/remote/model/info.dart';
+import 'package:flutter_contacts/src/data/remote/contacts/model/contact.dart';
+import 'package:flutter_contacts/src/data/remote/contacts/model/info.dart';
 
 class ContactsResponse {
   List<Contact> contacts;
