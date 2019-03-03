@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/src/domain/contacts/contact_bloc.dart';
 import 'package:flutter_contacts/src/presentation/common/loading_indicator_widget.dart';
 import 'package:flutter_contacts/src/presentation/common/text_widget.dart';
-import 'package:flutter_contacts/src/presentation/contacts/contact_event.dart';
+import 'package:flutter_contacts/src/domain/contacts/contact_event.dart';
 import 'package:flutter_contacts/src/presentation/contacts/contact_list.dart';
-import 'package:flutter_contacts/src/presentation/contacts/contact_state.dart';
+import 'package:flutter_contacts/src/domain/contacts/contact_state.dart';
 import 'package:flutter_contacts/src/util/constants.dart';
 
 class ContactScreen extends StatefulWidget {

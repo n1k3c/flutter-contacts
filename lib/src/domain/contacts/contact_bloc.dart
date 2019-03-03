@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_contacts/src/data/remote/contacts/model/contact.dart';
 import 'package:flutter_contacts/src/di/injection.dart';
 import 'package:flutter_contacts/src/domain/contacts/get_contacts.dart';
-import 'package:flutter_contacts/src/presentation/contacts/contact_event.dart';
-import 'package:flutter_contacts/src/presentation/contacts/contact_state.dart';
+import 'package:flutter_contacts/src/domain/contacts/contact_event.dart';
+import 'package:flutter_contacts/src/domain/contacts/contact_state.dart';
 
 class ContactBloc extends Bloc<ContactEvent, ContactState> {
   GetContacts getContacts;

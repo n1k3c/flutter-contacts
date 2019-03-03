@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/src/data/remote/contacts/model/contact.dart';
 import 'package:flutter_contacts/src/domain/contacts/contact_bloc.dart';
-import 'package:flutter_contacts/src/presentation/contacts/contact_event.dart';
-import 'package:flutter_contacts/src/presentation/contacts/contact_state.dart';
+import 'package:flutter_contacts/src/domain/contacts/contact_event.dart';
+import 'package:flutter_contacts/src/domain/contacts/contact_state.dart';
 
 class DetailsScreen extends StatefulWidget {
   final Contact contact;
