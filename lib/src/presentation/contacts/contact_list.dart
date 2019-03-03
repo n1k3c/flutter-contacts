@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/src/data/remote/model/contact.dart';
-import 'package:flutter_contacts/src/domain/bloc/bloc_provider.dart';
-import 'package:flutter_contacts/src/domain/bloc/contacts_bloc.dart';
 import 'package:flutter_contacts/src/presentation/details/details_screen.dart';
 import 'package:flutter_contacts/src/util/constants.dart';
 
@@ -45,10 +43,7 @@ class BuildListTile extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BlocProvider<ContactsBloc>(
-              bloc: ContactsBloc(),
-              child: DetailsScreen(contact: item),
-            ),
+            builder: (context) => DetailsScreen(contact: item),
           ),
         );
       },

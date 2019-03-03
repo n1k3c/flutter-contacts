@@ -1,57 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/src/domain/bloc/bloc_provider.dart';
-import 'package:flutter_contacts/src/domain/bloc/contacts_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_contacts/src/domain/bloc/contact_bloc.dart';
 import 'package:flutter_contacts/src/presentation/common/loading_indicator_widget.dart';
 import 'package:flutter_contacts/src/presentation/common/text_widget.dart';
+import 'package:flutter_contacts/src/presentation/contacts/contact_event.dart';
 import 'package:flutter_contacts/src/presentation/contacts/contact_list.dart';
 import 'package:flutter_contacts/src/presentation/contacts/contact_state.dart';
 import 'package:flutter_contacts/src/util/constants.dart';
 
-class ContactScreen extends StatelessWidget {
+class ContactScreen extends StatefulWidget {
   @override
-  Widget build(context) {
-    ContactsBloc bloc = BlocProvider.of<ContactsBloc>(context);
+  _ContactScreenState createState() => _ContactScreenState();
+}
 
+class _ContactScreenState extends State<ContactScreen> {
+  ContactBloc contactBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    contactBloc = ContactBloc();
+    contactBloc.dispatch(FetchContacts());
+  }
+
+  @override
+  void dispose() {
+    contactBloc.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(appTitle),
       ),
-      body: _ContactsList(bloc),
-    );
-  }
-}
-
-class _ContactsList extends StatelessWidget {
-  final ContactsBloc bloc;
-
-  const _ContactsList(this.bloc);
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: bloc.contactsList,
-        builder: (context, snapshot) {
-          final data = snapshot.data;
+      body: BlocBuilder(
+        bloc: contactBloc,
+        builder: (context, ContactState state) {
           return Column(
             children: <Widget>[
               Expanded(
                 child: Stack(
                   children: <Widget>[
                     LoadingIndicatorWidget(
-                      visible: data is ContactStateLoading,
+                      visible: state is ContactStateLoading,
                     ),
                     ContactListWidget(
-                      visible: data is ContactStatePopulated,
+                      visible: state is ContactStatePopulated,
                       contactList:
-                          data is ContactStatePopulated ? data.contacts : [],
+                          state is ContactStatePopulated ? state.contacts : [],
                     ),
                     TextWidget(
-                      visible: data is ContactStateError || snapshot.hasError,
-                      message:
-                          data is ContactStateError ? data.error : errorMessage,
+                      visible: state is ContactStateError,
+                      message: state is ContactStateError
+                          ? state.error
+                          : errorMessage,
                     ),
                     TextWidget(
-                      visible: data is ContactStateEmpty,
+                      visible: state is ContactStateEmpty,
                       message: emptyList,
                     ),
                   ],
@@ -59,6 +66,8 @@ class _ContactsList extends StatelessWidget {
               ),
             ],
           );
-        });
+        },
+      ),
+    );
   }
 }

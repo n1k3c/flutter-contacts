@@ -1,5 +1,5 @@
 import 'package:flutter_contacts/src/data/remote/api/contacts_api.dart';
-import 'package:flutter_contacts/src/domain/bloc/contacts_bloc.dart';
+import 'package:flutter_contacts/src/domain/bloc/contact_bloc.dart';
 import 'package:flutter_contacts/src/domain/contacts/get_contacts.dart';
 import 'package:flutter_contacts/src/presentation/contacts/contact_state.dart';
 import 'package:mockito/mockito.dart';
@@ -17,12 +17,12 @@ class MockGetContacts extends Mock implements GetContacts {}
 void main() {
   MockGetContacts getContacts;
 
-  ContactsBloc contactsBloc;
+  ContactBloc contactsBloc;
 
   setUp(() {
     getContacts = MockGetContacts();
 
-    contactsBloc = ContactsBloc(getContacts: getContacts);
+    contactsBloc = ContactBloc(getContacts: getContacts);
   });
 
   test('emits a loading state and then a populated state', () {

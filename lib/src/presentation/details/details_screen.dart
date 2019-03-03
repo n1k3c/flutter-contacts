@@ -1,39 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/src/data/remote/model/contact.dart';
-import 'package:flutter_contacts/src/domain/bloc/bloc_provider.dart';
-import 'package:flutter_contacts/src/domain/bloc/contacts_bloc.dart';
+import 'package:flutter_contacts/src/domain/bloc/contact_bloc.dart';
+import 'package:flutter_contacts/src/presentation/contacts/contact_event.dart';
+import 'package:flutter_contacts/src/presentation/contacts/contact_state.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
   final Contact contact;
 
-  DetailsScreen({this.contact});
+  DetailsScreen({@required this.contact});
 
   @override
-  Widget build(BuildContext context) {
-    ContactsBloc bloc = BlocProvider.of<ContactsBloc>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(contact.fullName),
-      ),
-      body: _DetailsBody(bloc),
-    );
-  }
+  _DetailsScreenState createState() => _DetailsScreenState();
 }
 
-class _DetailsBody extends StatelessWidget {
-  final ContactsBloc bloc;
+class _DetailsScreenState extends State<DetailsScreen> {
+  ContactBloc contactBloc;
 
-  const _DetailsBody(this.bloc);
+  @override
+  void initState() {
+    super.initState();
+    contactBloc = ContactBloc();
+    contactBloc.dispatch(FetchContacts());
+  }
+
+  @override
+  void dispose() {
+    contactBloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: bloc.contactsList,
-        builder: (context, snapshot) {
-          final data = snapshot.data;
-          return Container(
-            child: Text(data.toString()),
-          );
-        });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.contact.fullName),
+      ),
+      body: BlocBuilder(
+        bloc: contactBloc,
+        builder: (context, ContactState state) {
+          return Text(state.toString());
+        },
+      ),
+    );
   }
 }
