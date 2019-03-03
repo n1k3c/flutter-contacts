@@ -1,6 +1,6 @@
-import 'package:flutter_contacts/src/data/remote/api/contacts_api.dart';
 import 'package:flutter_contacts/src/domain/bloc/contact_bloc.dart';
 import 'package:flutter_contacts/src/domain/contacts/get_contacts.dart';
+import 'package:flutter_contacts/src/presentation/contacts/contact_event.dart';
 import 'package:flutter_contacts/src/presentation/contacts/contact_state.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -17,26 +17,56 @@ class MockGetContacts extends Mock implements GetContacts {}
 void main() {
   MockGetContacts getContacts;
 
-  ContactBloc contactsBloc;
+  ContactBloc contactBloc;
 
   setUp(() {
     getContacts = MockGetContacts();
 
-    contactsBloc = ContactBloc(getContacts: getContacts);
+    contactBloc = ContactBloc(getContacts: getContacts);
   });
 
-  test('emits a loading state and then a populated state', () {
-    when(contactsBloc.getContacts.fetchContacts()).thenAnswer((_) async => dummyContactList());
-    expect(contactsBloc.contactsList, emitsInOrder([ContactsStateLoading, ContactsStatePopulated]));
-  });
+  group('check correct order of states', () {
+    test('emits a empty state as init state', () {
+      expect(contactBloc.initialState, ContactsStateEmpty);
+    });
 
-  test('emits a loading state and then a empty state', () {
-    when(contactsBloc.getContacts.fetchContacts()).thenAnswer((_) async => dummyContactEmptyList());
-    expect(contactsBloc.contactsList, emitsInOrder([ContactsStateLoading, ContactsStateEmpty]));
-  });
+    test('check correct order of emits states on success', () {
+      when(getContacts.fetchContacts())
+          .thenAnswer((_) async => dummyContactList());
 
-  test('emits a loading state and then a error state', () {
-    when(contactsBloc.getContacts.fetchContacts()).thenThrow(Exception('Your error message is here.'));
-    expect(contactsBloc.contactsList, emitsInOrder([ContactsStateLoading, ContactsStateError]));
+      contactBloc.dispatch(FetchContacts());
+
+      expect(
+          contactBloc.state,
+          emitsInOrder([
+            ContactsStateEmpty,
+            ContactsStateLoading,
+            ContactsStatePopulated
+          ]));
+    });
+
+    test('check correct order of emits states when list is empty', () {
+      when(getContacts.fetchContacts())
+          .thenAnswer((_) async => dummyContactEmptyList());
+
+      contactBloc.dispatch(FetchContacts());
+
+      expect(
+          contactBloc.state,
+          emitsInOrder(
+              [ContactsStateEmpty, ContactsStateLoading, ContactsStateEmpty]));
+    });
+
+    test('check correct order of emits states on error', () {
+      when(contactBloc.getContacts.fetchContacts())
+          .thenThrow(Exception('Your error message is here.'));
+
+      contactBloc.dispatch(FetchContacts());
+
+      expect(
+          contactBloc.state,
+          emitsInOrder(
+              [ContactsStateEmpty, ContactsStateLoading, ContactsStateError]));
+    });
   });
 }
