@@ -15,6 +15,7 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  // Implement different bloc here...
   ContactBloc contactBloc;
 
   @override
@@ -39,7 +40,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
       body: BlocBuilder(
         bloc: contactBloc,
         builder: (context, ContactState state) {
-          return Text(state.toString());
+          // Show data from bloc here...
+          return Image.network(widget.contact.imageUrl);
         },
       ),
     );
