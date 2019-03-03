@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/src/data/remote/model/contact.dart';
+import 'package:flutter_contacts/src/domain/bloc/bloc_provider.dart';
+import 'package:flutter_contacts/src/domain/bloc/contacts_bloc.dart';
+import 'package:flutter_contacts/src/presentation/details/details_screen.dart';
 import 'package:flutter_contacts/src/util/constants.dart';
 
 class ContactListWidget extends StatelessWidget {
@@ -39,6 +42,15 @@ class BuildListTile extends StatelessWidget {
       leading: CircleAvatar(child: Text(item.fullName[0])),
       onTap: () {
         print(item.fullName);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider<ContactsBloc>(
+              bloc: ContactsBloc(),
+              child: DetailsScreen(contact: item),
+            ),
+          ),
+        );
       },
     );
   }
