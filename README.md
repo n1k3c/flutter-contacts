@@ -1,6 +1,9 @@
-# flutter_contacts
+# Flutter starter template
 
-A new Flutter project.
+Simple app showing BloC pattern ([bloc package](https://felangel.github.io/bloc/#/)). App is fetching random data from http://api.randomuser.me.
+
+
+[![contacts.png](https://i.postimg.cc/wjGfLmNZ/contacts.png)](https://postimg.cc/RWwLzqXL)
 
 ## Getting Started
 
